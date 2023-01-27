@@ -1,38 +1,25 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import AppHeader from "@/components/AppHeader.vue";
+import DropZone from "@/components/Dropzone.vue";
+import File from "@/components/FileHandler.vue";
+</script>
 
 <template>
   <main>
     <div class="container py-4">
-      <div class="pb-3 mb-4 border-bottom">
-        <a
-          href="/"
-          class="d-flex align-items-center text-dark text-decoration-none"
-        >
-          <svg
-            version="1.1"
-            viewBox="0 0 261.76 226.69"
-            xmlns="http://www.w3.org/2000/svg"
-            height="40px"
-            width="40px"
-          >
-            <g transform="matrix(1.3333 0 0 -1.3333 -76.311 313.34)">
-              <g transform="translate(178.06 235.01)">
-                <path
-                  d="m0 0-22.669-39.264-22.669 39.264h-75.491l98.16-170.02 98.16 170.02z"
-                  fill="#41b883"
-                />
-              </g>
-              <g transform="translate(178.06 235.01)">
-                <path
-                  d="m0 0-22.669-39.264-22.669 39.264h-36.227l58.896-102.01 58.896 102.01z"
-                  fill="#34495e"
-                />
-              </g>
-            </g>
-          </svg>
-          <span class="fs-4">Vue Dropzone Demo </span>
-        </a>
+      <AppHeader />
+    </div>
+    <div class="container">
+      <DropZone />
+    </div>
+    <div class="container py-4">
+      <div class="row">
+        <h1 class="fw-bold mb-4">Files</h1>
       </div>
+      <File />
+      <File />
+      <File />
+      <File />
     </div>
   </main>
 </template>
