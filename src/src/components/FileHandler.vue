@@ -15,7 +15,7 @@
       <button type="submit" class="btn btn-danger mb-3">Remove</button>
     </div>
     <div class="col-auto">
-      <button type="submit" class="btn btn-primary mb-3">Upload</button>
+      <button type="submit" class="btn btn-success mb-3">Upload</button>
     </div>
   </div>
 </template>

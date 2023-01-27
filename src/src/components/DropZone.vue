@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { useDropzone } from "vue3-dropzone";
 
-const onDrop = (acceptFiles: Object, rejectReasons: any) => {
-  console.log(acceptFiles);
-  console.log(rejectReasons);
+const emit = defineEmits(["fileUpload"]);
+
+const onDrop = (acceptFiles: Array<File>, rejectReasons: Array<File>) => {
+  if (rejectReasons.length > 0) {
+    console.log("files rejected", rejectReasons);
+  }
+  emit("fileUpload", acceptFiles);
 };
 
 const { getRootProps, getInputProps, isDragActive, open } = useDropzone({

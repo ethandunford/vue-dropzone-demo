@@ -4,7 +4,29 @@ import AppHeader from "@/components/AppHeader.vue";
 import DropZone from "@/components/DropZone.vue";
 import File from "@/components/FileHandler.vue";
 
-const rawFiles = ref([1, 2]);
+enum FileState {
+  New,
+  Uploading,
+  Error,
+}
+
+interface FileData {
+  fileObj: File;
+  state: FileState;
+  new_name: string | null;
+  message: string | null;
+}
+
+const rawFiles = ref<Record<number, FileData> | null>(null);
+
+const handleFileUpload = (files: Array<File>) => {
+  const _rF: { [key: number]: FileData } = {};
+  files.forEach((el, idx) => {
+    _rF[idx];
+    _rF[idx] = { fileObj: el, state: FileState.New } as FileData;
+  });
+  rawFiles.value = _rF;
+};
 </script>
 
 <template>
@@ -13,7 +35,7 @@ const rawFiles = ref([1, 2]);
       <AppHeader />
     </div>
     <div class="container">
-      <DropZone />
+      <DropZone @fileUpload="handleFileUpload($event)" />
     </div>
     <div class="container py-4">
       <div class="row">
