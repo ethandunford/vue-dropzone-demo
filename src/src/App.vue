@@ -7,6 +7,7 @@ import { FileState } from "@/app/core";
 import type { FileData, FileHandlerPayload } from "@/app/core";
 
 const rawFiles = ref<Record<number, FileData> | null>(null);
+const disableDropZone = ref<boolean>(false);
 
 const handleFileUpload = (files: Array<File>) => {
   const _rF: { [key: number]: FileData } = {};
@@ -27,6 +28,7 @@ const removeFile = (id: number) => {
 
 const upload = (payload: FileHandlerPayload) => {
   if (rawFiles.value !== null) {
+    disableDropZone.value = true;
     console.log("Uploading ==> ", rawFiles.value[payload.id]);
 
     rawFiles.value[payload.id].state = FileState.Uploading;
@@ -34,7 +36,7 @@ const upload = (payload: FileHandlerPayload) => {
 
     setTimeout(() => {
       const result = Math.random() < 0.5;
-
+      disableDropZone.value = false;
       if (result) {
         rawFiles.value[payload.id].state = FileState.Success;
         rawFiles.value[payload.id].message = "File has been uploaded!";
@@ -57,9 +59,12 @@ const upload = (payload: FileHandlerPayload) => {
       <AppHeader />
     </div>
     <div class="container">
-      <DropZone @fileUpload="handleFileUpload($event)" />
+      <DropZone
+        @fileUpload="handleFileUpload($event)"
+        :disabled="disableDropZone"
+      />
     </div>
-    <div class="container py-4" v-if="rawFiles">
+    <div class="container py-4">
       <div class="row">
         <h1 class="fw-bold mb-4">Files</h1>
       </div>
