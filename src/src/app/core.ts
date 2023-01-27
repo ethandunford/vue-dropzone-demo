@@ -1,7 +1,8 @@
 export enum FileState {
-  New,
-  Uploading,
-  Error,
+  New = "New",
+  Uploading = "Uploading",
+  Error = "Error",
+  Success = "Success",
 }
 export interface FileData {
   fileObj: File;

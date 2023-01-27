@@ -3,7 +3,8 @@ import { ref } from "vue";
 import AppHeader from "@/components/AppHeader.vue";
 import DropZone from "@/components/DropZone.vue";
 import File from "@/components/FileHandler.vue";
-import { FileState, FileData } from "@/app/core";
+import { FileState } from "@/app/core";
+import type { FileData } from "@/app/core";
 
 const rawFiles = ref<Record<number, FileData> | null>(null);
 
@@ -15,6 +16,33 @@ const handleFileUpload = (files: Array<File>) => {
   });
   rawFiles.value = _rF;
 };
+
+const removeFile = (id: number) => {
+  if (rawFiles.value) {
+    const raw = JSON.parse(JSON.stringify(rawFiles.value));
+    delete raw[id];
+    rawFiles.value = Object.keys(raw).length > 0 ? raw : undefined;
+  }
+};
+
+const upload = (payload: Object) => {
+  if (rawFiles.value !== null) {
+    rawFiles.value[payload.id].state = FileState.Uploading;
+    rawFiles.value[payload.id].message = "";
+
+    setTimeout(() => {
+      const result = Math.random() < 0.5;
+
+      if (result) {
+        rawFiles.value[payload.id].state = FileState.Success;
+        rawFiles.value[payload.id].message = "File has been uploaded!";
+      } else {
+        rawFiles.value[payload.id].state = FileState.Error;
+        rawFiles.value[payload.id].message = "Error uploading file";
+      }
+    }, 2000);
+  }
+};
 </script>
 
 <template>
@@ -25,6 +53,7 @@ const handleFileUpload = (files: Array<File>) => {
     <div class="container">
       <DropZone @fileUpload="handleFileUpload($event)" />
     </div>
+    {{ rawFiles }}
     <div class="container py-4" v-if="rawFiles">
       <div class="row">
         <h1 class="fw-bold mb-4">Files</h1>
@@ -32,10 +61,12 @@ const handleFileUpload = (files: Array<File>) => {
       <File
         v-for="(file, idx) in rawFiles"
         :key="idx"
-        :id="idx"
+        :id="Number(idx)"
         :file="file.fileObj"
         :state="file.state"
         :message="file.message"
+        @remove="removeFile($event)"
+        @upload="upload($event)"
       />
     </div>
   </main>
