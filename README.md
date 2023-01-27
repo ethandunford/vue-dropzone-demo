@@ -35,7 +35,7 @@ Compile and run docker environment
 
 # Version
 
-0.0.1
+1.0.0
 
 ## Contributing
 
