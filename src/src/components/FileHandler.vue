@@ -11,7 +11,7 @@ const props = defineProps({
     required: true,
   },
   file: {
-    type: File,
+    type: Object,
     required: true,
   },
   state: {

@@ -4,7 +4,7 @@ import AppHeader from "@/components/AppHeader.vue";
 import DropZone from "@/components/DropZone.vue";
 import File from "@/components/FileHandler.vue";
 import { FileState } from "@/app/core";
-import type { FileData } from "@/app/core";
+import type { FileData, FileHandlerPayload } from "@/app/core";
 
 const rawFiles = ref<Record<number, FileData> | null>(null);
 
@@ -25,8 +25,10 @@ const removeFile = (id: number) => {
   }
 };
 
-const upload = (payload: Object) => {
+const upload = (payload: FileHandlerPayload) => {
   if (rawFiles.value !== null) {
+    console.log("Uploading ==> ", rawFiles.value[payload.id]);
+
     rawFiles.value[payload.id].state = FileState.Uploading;
     rawFiles.value[payload.id].message = "";
 
@@ -36,6 +38,10 @@ const upload = (payload: Object) => {
       if (result) {
         rawFiles.value[payload.id].state = FileState.Success;
         rawFiles.value[payload.id].message = "File has been uploaded!";
+
+        setTimeout(() => {
+          removeFile(payload.id);
+        }, 2000);
       } else {
         rawFiles.value[payload.id].state = FileState.Error;
         rawFiles.value[payload.id].message = "Error uploading file";
@@ -53,7 +59,6 @@ const upload = (payload: Object) => {
     <div class="container">
       <DropZone @fileUpload="handleFileUpload($event)" />
     </div>
-    {{ rawFiles }}
     <div class="container py-4" v-if="rawFiles">
       <div class="row">
         <h1 class="fw-bold mb-4">Files</h1>

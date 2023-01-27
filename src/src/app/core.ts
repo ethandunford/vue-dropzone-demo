@@ -10,3 +10,8 @@ export interface FileData {
   new_name: string | null;
   message: string | undefined;
 }
+
+export interface FileHandlerPayload {
+  id: number;
+  newFileName: string;
+}
