@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import AppHeader from "@/components/AppHeader.vue";
-import DropZone from "@/components/Dropzone.vue";
+import DropZone from "@/components/DropZone.vue";
 import File from "@/components/FileHandler.vue";
+
+const rawFiles = ref([1, 2]);
 </script>
 
 <template>
@@ -16,10 +19,7 @@ import File from "@/components/FileHandler.vue";
       <div class="row">
         <h1 class="fw-bold mb-4">Files</h1>
       </div>
-      <File />
-      <File />
-      <File />
-      <File />
+      <File v-for="(file, idx) in rawFiles" :key="idx" />
     </div>
   </main>
 </template>

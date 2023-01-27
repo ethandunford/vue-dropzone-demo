@@ -1,23 +1,14 @@
-<script lang="ts">
+<script setup lang="ts">
 import { useDropzone } from "vue3-dropzone";
 
-export default {
-  name: "UseDropzoneDemo",
-  setup() {
-    function onDrop(acceptFiles, rejectReasons) {
-      console.log(acceptFiles);
-      console.log(rejectReasons);
-    }
-
-    const { getRootProps, getInputProps, ...rest } = useDropzone({ onDrop });
-
-    return {
-      getRootProps,
-      getInputProps,
-      ...rest,
-    };
-  },
+const onDrop = (acceptFiles: Object, rejectReasons: any) => {
+  console.log(acceptFiles);
+  console.log(rejectReasons);
 };
+
+const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
+  onDrop,
+});
 </script>
 <template>
   <div class="p-5 mb-4 text-center bg-light rounded-3">
